@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ODER-Gatter mit drei Schaltern</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+           background-image: url('Hintergrund.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: #ffffff;
+            font-family: 'Roboto', sans-serif;
+            text-align: center;
+            padding: 0 20px;
+        }
+        h1 {
+            font-weight: 700;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .switch-container {
+            margin-bottom: 30px;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 80px;
+            height: 40px;
+        }
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 40px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 32px;
+            width: 32px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+        input:checked + .slider:before {
+            transform: translateX(40px);
+        }
+        .switch-label {
+            font-weight: 500;
+            display: block;
+            margin-top: 10px;
+        }
+        #led {
+            width: 70px;
+            height: 70px;
+            background-color: grey;
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+        #led.on {
+            background-color: #32CD32;
+            box-shadow: 0 0 25px #32CD32;
+        }
+    </style>
+</head>
+<body>
+    <h2 style="color: #ffffff;">Tor Süd</h2>
+    
+    <div class="switch-container">
+        <div>
+            <label class="switch">A<input type="checkbox" id="switchA"><span class="slider round"></span></label>
+            <span class="switch-label" style="color: #ffffff;">Schalter A</span>
+        </div>
+        <div>
+            <label class="switch">B<input type="checkbox" id="switchB"><span class="slider round"></span></label>
+            <span class="switch-label" style="color: #ffffff;">Schalter B</span>
+        </div>
+        <div>
+            <label class="switch">C<input type="checkbox" id="switchC"><span class="slider round"></span></label>
+            <span class="switch-label" style="color: #ffffff;">Schalter C</span>
+        </div>
+    </div>
+    <div id="led"></div>
+    <span class="switch-label" style="color: #ffffff;">Tor</span>
+
+    <script>
+        let switchAState = false;
+        let switchBState = false;
+        let switchCState = false;
+
+        document.getElementById('switchA').addEventListener('change', function() {
+            switchAState = this.checked;
+            updateLED();
+        });
+
+        document.getElementById('switchB').addEventListener('change', function() {
+            switchBState = this.checked;
+            updateLED();
+        });
+
+        document.getElementById('switchC').addEventListener('change', function() {
+            switchCState = this.checked;
+            updateLED();
+        });
+
+        function updateLED() {
+            const led = document.getElementById('led');
+            if (switchAState || switchBState || switchCState) {
+                led.classList.add('on');
+            } else {
+                led.classList.remove('on');
+            }
+        }
+    </script>
+</body>
+</html>
